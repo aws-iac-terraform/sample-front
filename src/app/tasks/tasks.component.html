@@ -1,17 +1,33 @@
-<h2>{{ task.name }} Details</h2>
-<div><span>id: </span>{{ task.id }}</div>
-<!-- <div><span>name: </span>{{ task.name }}</div> -->
+<h2>Tasks</h2>
+
 <div>
-  <label for="name">Task name: </label>
-  <input id="name" [(ngModel)]="task.name" placeholder="name" />
+  <label for="new-task">Task name: </label>
+  <input id="new-task" #taskName />
+
+  <!-- (click) 入力値をadd()に渡したあと、入力をクリアする -->
+  <button
+    type="button"
+    class="add-button"
+    (click)="add(taskName.value); taskName.value = ''"
+  >
+    Add Task
+  </button>
 </div>
-<!-- <div><span>completed: </span>{{ task.completed }}</div> -->
-<div>
-  <label for="completed">Task completed: </label>
-  <input
-    type="checkbox"
-    id="completed"
-    [(ngModel)]="task.completed"
-    placeholder="completed"
-  />
-</div>
+
+<ul class="tasks">
+  <li *ngFor="let task of tasks">
+    <a routerLink="/detail/{{ task.id }}">
+      <span class="badge">{{ task.id }}</span> {{ task.name }}
+    </a>
+    <button
+      type="button"
+      class="delete"
+      title="delete task"
+      (click)="delete(task)"
+    >
+      x
+    </button>
+  </li>
+</ul>
+
+<!-- <app-task-detail [task]="selectedTask"></app-task-detail> -->
